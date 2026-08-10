@@ -35,6 +35,14 @@ const words = [
       { jyutping: "ngok6", label: "音乐", example: "音樂 · 樂器", gloss: "乐音、乐器", audio: "/audio/ngok6.mp3" },
     ],
   },
+  {
+    char: "折",
+    note: "简体同一个「折」，在繁体和粤音里要分清两种意思。",
+    readings: [
+      { jyutping: "zit3", label: "折扣", example: "打折 · 折扣", gloss: "减价、扣减；繁体仍写「折」", audio: "/audio/zit3.mp3" },
+      { jyutping: "zip3", label: "折叠", example: "摺疊 · 摺紙", gloss: "屈叠、收起；繁体通常写「摺」", audio: "/audio/zip3.mp3" },
+    ],
+  },
 ];
 
 const mistakes = [
@@ -47,10 +55,10 @@ const pronunciationTraps = [
   {
     char: "弥",
     traditional: "彌",
-    jyutping: "mei4",
+    jyutping: "nei4",
     example: "彌補 · 彌漫",
-    audio: "/audio/mei4.mp3",
-    reminder: "书面本读 mei4；口语亦常听到 nei4，认识两者就不易听错。",
+    audio: "/audio/nei4.mp3",
+    reminder: "「彌補、彌漫」的「彌」读 nei4，认住 n 声母就不易读错。",
   },
   {
     char: "憧",
@@ -75,6 +83,7 @@ const quiz = [
   { prompt: "边句写法更准确？", options: ["我係学校", "我喺學校", "我系學校"], answer: 1, explain: "讲所在位置要用「喺」；「係」表示“是”。" },
   { prompt: "「音樂」里面的「樂」点读？", options: ["lok6", "ngok6", "zoek6"], answer: 1, explain: "表示音乐、乐器时，「樂」读 ngok6。" },
   { prompt: "「閃爍」里面的「爍」点读？", options: ["lok6", "soek3", "zoek6"], answer: 1, explain: "「閃爍」读 sim2 soek3，「爍」是短促的入声字。" },
+  { prompt: "「打折」同「摺疊」的字音顺序系？", options: ["zit3、zip3", "zip3、zit3", "zit6、zip6"], answer: 0, explain: "打折读 daa2 zit3；摺疊读 zip3 dip6。简体都可见「折」，繁体字形会分开。" },
 ];
 
 export default function Home() {
