@@ -1,38 +1,38 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 const words = [
   {
     char: "行",
     note: "一个字，换个场景就换把声。",
     readings: [
-      { jyutping: "haang4", label: "行走", example: "行街 · 行路", gloss: "走、步行" },
-      { jyutping: "hong4", label: "行业", example: "銀行 · 行家", gloss: "行业、行列" },
+      { jyutping: "haang4", label: "行走", example: "行街 · 行路", gloss: "走、步行", audio: "/audio/haang4.mp3" },
+      { jyutping: "hong4", label: "行业", example: "銀行 · 行家", gloss: "行业、行列", audio: "/audio/hong4.mp3" },
     ],
   },
   {
     char: "重",
     note: "声调一转，动作和重量就分开了。",
     readings: [
-      { jyutping: "cung4", label: "重复", example: "重新 · 重逢", gloss: "再次、重复" },
-      { jyutping: "zung6", label: "重量", example: "重要 · 重量", gloss: "分量大、要紧" },
+      { jyutping: "cung4", label: "重复", example: "重新 · 重逢", gloss: "再次、重复", audio: "/audio/cung4.mp3" },
+      { jyutping: "zung6", label: "重量", example: "重要 · 重量", gloss: "分量大、要紧", audio: "/audio/zung6.mp3" },
     ],
   },
   {
     char: "長",
     note: "是长度，还是成长？语境会告诉你。",
     readings: [
-      { jyutping: "coeng4", label: "长度", example: "長短 · 長城", gloss: "距离或时间长" },
-      { jyutping: "zoeng2", label: "成长", example: "長大 · 校長", gloss: "成长、年长者" },
+      { jyutping: "coeng4", label: "长度", example: "長短 · 長城", gloss: "距离或时间长", audio: "/audio/coeng4.mp3" },
+      { jyutping: "zoeng2", label: "成长", example: "長大 · 校長", gloss: "成长、年长者", audio: "/audio/zoeng2.mp3" },
     ],
   },
   {
     char: "樂",
     note: "快乐和音乐，只差一个读音。",
     readings: [
-      { jyutping: "lok6", label: "快乐", example: "快樂 · 樂趣", gloss: "开心、欢喜" },
-      { jyutping: "ngok6", label: "音乐", example: "音樂 · 樂器", gloss: "乐音、乐器" },
+      { jyutping: "lok6", label: "快乐", example: "快樂 · 樂趣", gloss: "开心、欢喜", audio: "/audio/lok6.mp3" },
+      { jyutping: "ngok6", label: "音乐", example: "音樂 · 樂器", gloss: "乐音、乐器", audio: "/audio/ngok6.mp3" },
     ],
   },
 ];
@@ -49,6 +49,7 @@ const pronunciationTraps = [
     traditional: "彌",
     jyutping: "mei4",
     example: "彌補 · 彌漫",
+    audio: "/audio/mei4.mp3",
     reminder: "书面本读 mei4；口语亦常听到 nei4，认识两者就不易听错。",
   },
   {
@@ -56,6 +57,7 @@ const pronunciationTraps = [
     traditional: "憧",
     jyutping: "cung1",
     example: "憧憬 cung1 ging2",
+    audio: "/audio/cung1.mp3",
     reminder: "不要见到「童」就直接猜 tung4；在「憧憬」里读 cung1。",
   },
   {
@@ -63,6 +65,7 @@ const pronunciationTraps = [
     traditional: "爍",
     jyutping: "soek3",
     example: "閃爍 sim2 soek3",
+    audio: "/audio/soek3.mp3",
     reminder: "这是入声字，结尾短促；不要按普通话或声旁随意猜音。",
   },
 ];
@@ -80,18 +83,17 @@ export default function Home() {
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
+  const activeAudio = useRef<HTMLAudioElement | null>(null);
   const word = words[activeWord];
   const current = quiz[question];
 
   const progress = useMemo(() => Math.round(((question + (selected !== null ? 1 : 0)) / quiz.length) * 100), [question, selected]);
 
-  function speak(text: string) {
-    if (!("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "zh-HK";
-    utterance.rate = 0.78;
-    window.speechSynthesis.speak(utterance);
+  function playCantonese(src: string) {
+    activeAudio.current?.pause();
+    const audio = new Audio(src);
+    activeAudio.current = audio;
+    void audio.play();
   }
 
   function choose(index: number) {
@@ -133,7 +135,7 @@ export default function Home() {
           <p className="intro">从一句话的语境，听懂一个字的变化。每日 5 分钟，认清粤语多音字同常见错字。</p>
           <div className="hero-actions">
             <a className="primary-button" href="#learn">开始第一课 <span>→</span></a>
-            <button className="sound-button" onClick={() => speak("一字多音，唔好读错")}>◖)) <span>听听粤语</span></button>
+            <button className="sound-button" onClick={() => playCantonese("/audio/hero.mp3")}>◖)) <span>听听粤语</span></button>
           </div>
           <div className="social-proof"><strong>3,280+</strong><span>个学习者今日已经醒目咗</span></div>
         </div>
@@ -167,7 +169,7 @@ export default function Home() {
                 <span className="reading-num">0{index + 1}</span>
                 <div><p className="jyutping">{reading.jyutping}</p><h3>{reading.label}</h3><p>{reading.gloss}</p></div>
                 <div className="example"><span>例词</span><b>{reading.example}</b></div>
-                <button className="play" aria-label={`播放${reading.example}`} onClick={() => speak(reading.example.replace(" · ", "，"))}>▶</button>
+                <button className="play" aria-label={`播放${reading.example}的粤语录音`} onClick={() => playCantonese(reading.audio)}>▶</button>
               </article>
             ))}
           </div>
@@ -193,7 +195,7 @@ export default function Home() {
           </div>
           <div className="trap-list">
             {pronunciationTraps.map((item) => <article key={item.char}>
-              <button className="trap-char" onClick={() => speak(item.example.split(" ")[0])} aria-label={`播放${item.char}字例词`}>
+              <button className="trap-char" onClick={() => playCantonese(item.audio)} aria-label={`播放${item.char}字粤语例词`}>
                 {item.char}<small>{item.traditional === item.char ? "" : `繁：${item.traditional}`}</small>
               </button>
               <div className="trap-copy">
@@ -201,7 +203,7 @@ export default function Home() {
                 <h4>{item.example}</h4>
                 <p>{item.reminder}</p>
               </div>
-              <button className="trap-play" onClick={() => speak(item.example.split(" ")[0])} aria-label={`听${item.example}`}>▶</button>
+              <button className="trap-play" onClick={() => playCantonese(item.audio)} aria-label={`听${item.example}的粤语录音`}>▶</button>
             </article>)}
           </div>
         </div>
