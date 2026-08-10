@@ -76,6 +76,46 @@ const pronunciationTraps = [
     audio: "/audio/soek3.mp3",
     reminder: "这是入声字，结尾短促；不要按普通话或声旁随意猜音。",
   },
+  {
+    char: "角",
+    traditional: "角",
+    jyutping: "gok3 sik1",
+    example: "角色",
+    audio: "/audio/gok3-sik1.mp3",
+    reminder: "讲人物身份时，「角色」读 gok3 sik1，不跟普通话读法走。",
+  },
+  {
+    char: "框",
+    traditional: "框",
+    jyutping: "hong1 gaa3",
+    example: "框架",
+    audio: "/audio/hong1-gaa3.mp3",
+    reminder: "「框架」读 hong1 gaa3；「框」不是见到匡字边就随意猜音。",
+  },
+  {
+    char: "氛",
+    traditional: "氛",
+    jyutping: "fan1 wai4",
+    example: "氛圍",
+    audio: "/audio/fan1-wai4.mp3",
+    reminder: "「氛」在「氛圍」里读第一声 fan1，不读 fan6。",
+  },
+  {
+    char: "嗜",
+    traditional: "嗜",
+    jyutping: "si3 hou3",
+    example: "嗜好",
+    audio: "/audio/si3-hou3.mp3",
+    reminder: "「嗜好」读 si3 hou3，前字与「试」同音。",
+  },
+];
+
+const lazySounds = [
+  { pattern: "N → L", word: "你哋", standard: "nei5 dei6", casual: "lei5 dei6", tip: "发 n 时舌尖贴近上齿龈，气流由鼻腔通过。" },
+  { pattern: "NG → Ø", word: "我哋", standard: "ngo5 dei6", casual: "o5 dei6", tip: "开口前先保留 ng 鼻音，不要直接由元音起声。" },
+  { pattern: "NG + N", word: "牛奶", standard: "ngau4 naai5", casual: "au4 laai5", tip: "两个声母都要读清：牛有 ng，奶有 n。" },
+  { pattern: "GW → G", word: "廣告", standard: "gwong2 gou3", casual: "gong2 gou3", tip: "读 gw 时先收舌根，再保留短促圆唇动作。" },
+  { pattern: "-NG → -N", word: "香港", standard: "hoeng1 gong2", casual: "hoen1 gon2", tip: "-ng 在舌根收音；不要用舌尖的 -n 代替。" },
 ];
 
 const quiz = [
@@ -84,6 +124,8 @@ const quiz = [
   { prompt: "「音樂」里面的「樂」点读？", options: ["lok6", "ngok6", "zoek6"], answer: 1, explain: "表示音乐、乐器时，「樂」读 ngok6。" },
   { prompt: "「閃爍」里面的「爍」点读？", options: ["lok6", "soek3", "zoek6"], answer: 1, explain: "「閃爍」读 sim2 soek3，「爍」是短促的入声字。" },
   { prompt: "「打折」同「摺疊」的字音顺序系？", options: ["zit3、zip3", "zip3、zit3", "zit6、zip6"], answer: 0, explain: "打折读 daa2 zit3；摺疊读 zip3 dip6。简体都可见「折」，繁体字形会分开。" },
+  { prompt: "边个先系「香港」较完整的读音？", options: ["hoen1 gon2", "hoeng1 gong2", "hong1 gong2"], answer: 1, explain: "较完整读法是 hoeng1 gong2，要保留两个 -ng 韵尾。" },
+  { prompt: "「氛圍」点读？", options: ["fan6 wai4", "fan1 wai4", "fun1 wai4"], answer: 1, explain: "「氛圍」读 fan1 wai4，「氛」是第一声。" },
 ];
 
 export default function Home() {
@@ -216,10 +258,26 @@ export default function Home() {
             </article>)}
           </div>
         </div>
+        <div className="lazy-block">
+          <div className="lazy-heading">
+            <p><span>03</span> 懒音对照</p>
+            <h3>讲快可以，<br />咬字都要清。</h3>
+            <p className="lazy-note">口音会随地区和世代变化；这里以朗读、播音时较完整的粤拼作练习目标。</p>
+          </div>
+          <div className="lazy-list">
+            <div className="lazy-labels"><span>字词</span><span>完整读音</span><span>常见省音</span></div>
+            {lazySounds.map((item) => <article key={item.word}>
+              <div className="lazy-word"><small>{item.pattern}</small><strong>{item.word}</strong></div>
+              <p className="standard"><span>✓</span>{item.standard}</p>
+              <p className="casual"><span>→</span>{item.casual}</p>
+              <p className="mouth-tip">{item.tip}</p>
+            </article>)}
+          </div>
+        </div>
       </section>
 
       <section className="quiz-section section" id="quiz">
-        <div className="quiz-intro"><p className="eyebrow dark"><span>●</span> 30 秒挑战</p><h2>你有几醒？</h2><p>三题快问快答，马上知道自己最容易错边度。</p><div className="quiz-mark">粤<br />字<br />醒</div></div>
+        <div className="quiz-intro"><p className="eyebrow dark"><span>●</span> 发音挑战</p><h2>你有几醒？</h2><p>快问快答，马上知道自己最容易错边度。</p><div className="quiz-mark">粤<br />字<br />醒</div></div>
         <div className="quiz-card">
           {finished ? <div className="result">
             <span className="result-icon">醒</span><p className="eyebrow dark">挑战完成</p><h3>{score} / {quiz.length}</h3><p>{score === quiz.length ? "全中！你对粤语字音好敏感。" : "有进步空间，返去温多次就稳阵。"}</p><button className="primary-button" onClick={restart}>再试一次 <span>↻</span></button>
