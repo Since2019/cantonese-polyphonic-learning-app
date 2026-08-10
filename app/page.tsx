@@ -108,6 +108,46 @@ const pronunciationTraps = [
     audio: "/audio/si3-hou3.mp3",
     reminder: "「嗜好」读 si3 hou3，前字与「试」同音。",
   },
+  {
+    char: "皈",
+    traditional: "皈",
+    jyutping: "gwai1 ji1",
+    example: "皈依",
+    audio: "/audio/gwai1-ji1.mp3",
+    reminder: "「皈」与「归」同音，皈依读 gwai1 ji1，不要见到「反」旁就猜错音。",
+  },
+  {
+    char: "骼",
+    traditional: "骼",
+    jyutping: "gwat1 gaak3",
+    example: "骨骼",
+    audio: "/audio/gwat1-gaak3.mp3",
+    reminder: "骨骼读 gwat1 gaak3，两个字都是短促入声，结尾要收得干净。",
+  },
+  {
+    char: "翌",
+    traditional: "翌",
+    jyutping: "jik6 jat6",
+    example: "翌日",
+    audio: "/audio/jik6-jat6.mp3",
+    reminder: "翌日即第二日，读 jik6 jat6；「翌」与「亦」同音。",
+  },
+  {
+    char: "刹",
+    traditional: "剎",
+    jyutping: "saat3 naa5",
+    example: "剎那",
+    audio: "/audio/saat3-naa5.mp3",
+    reminder: "「剎那」读 saat3 naa5，前字是入声，不读成 caat3。",
+  },
+  {
+    char: "酗",
+    traditional: "酗",
+    jyutping: "jyu3 zau2",
+    example: "酗酒",
+    audio: "/audio/jyu3-zau2.mp3",
+    reminder: "酗酒读 jyu3 zau2；「酗」的韵母是 yu，不要照普通话声母猜。",
+  },
 ];
 
 const lazySounds = [
@@ -126,6 +166,8 @@ const quiz = [
   { prompt: "「打折」同「摺疊」的字音顺序系？", options: ["zit3、zip3", "zip3、zit3", "zit6、zip6"], answer: 0, explain: "打折读 daa2 zit3；摺疊读 zip3 dip6。简体都可见「折」，繁体字形会分开。" },
   { prompt: "边个先系「香港」较完整的读音？", options: ["hoen1 gon2", "hoeng1 gong2", "hong1 gong2"], answer: 1, explain: "较完整读法是 hoeng1 gong2，要保留两个 -ng 韵尾。" },
   { prompt: "「氛圍」点读？", options: ["fan6 wai4", "fan1 wai4", "fun1 wai4"], answer: 1, explain: "「氛圍」读 fan1 wai4，「氛」是第一声。" },
+  { prompt: "「翌日」点读？", options: ["jap6 jat6", "jik6 jat6", "joek6 jat6"], answer: 1, explain: "「翌」与「亦」同音，翌日读 jik6 jat6。" },
+  { prompt: "「骨骼」边个读法正确？", options: ["gwat1 lok3", "gwat1 gaak3", "gwat6 gok3"], answer: 1, explain: "较适合学习和朗读的读法是 gwat1 gaak3，两个音节都是入声。" },
 ];
 
 export default function Home() {
