@@ -43,10 +43,35 @@ const mistakes = [
   { wrong: "宜家出发", right: "而家出發", title: "而家 ≠ 宜家", tip: "表示“现在”的常用粤语正字是「而家」。" },
 ];
 
+const pronunciationTraps = [
+  {
+    char: "弥",
+    traditional: "彌",
+    jyutping: "mei4",
+    example: "彌補 · 彌漫",
+    reminder: "书面本读 mei4；口语亦常听到 nei4，认识两者就不易听错。",
+  },
+  {
+    char: "憧",
+    traditional: "憧",
+    jyutping: "cung1",
+    example: "憧憬 cung1 ging2",
+    reminder: "不要见到「童」就直接猜 tung4；在「憧憬」里读 cung1。",
+  },
+  {
+    char: "烁",
+    traditional: "爍",
+    jyutping: "soek3",
+    example: "閃爍 sim2 soek3",
+    reminder: "这是入声字，结尾短促；不要按普通话或声旁随意猜音。",
+  },
+];
+
 const quiz = [
   { prompt: "「銀行」里面的「行」点读？", options: ["haang4", "hong4", "hang6"], answer: 1, explain: "「銀行」属于行业义，读 hong4。" },
   { prompt: "边句写法更准确？", options: ["我係学校", "我喺學校", "我系學校"], answer: 1, explain: "讲所在位置要用「喺」；「係」表示“是”。" },
   { prompt: "「音樂」里面的「樂」点读？", options: ["lok6", "ngok6", "zoek6"], answer: 1, explain: "表示音乐、乐器时，「樂」读 ngok6。" },
+  { prompt: "「閃爍」里面的「爍」点读？", options: ["lok6", "soek3", "zoek6"], answer: 1, explain: "「閃爍」读 sim2 soek3，「爍」是短促的入声字。" },
 ];
 
 export default function Home() {
@@ -160,6 +185,25 @@ export default function Home() {
             <p className="wrong"><span>×</span>{item.wrong}</p><p className="right"><span>✓</span>{item.right}</p>
             <p className="tip">{item.tip}</p>
           </article>)}
+        </div>
+        <div className="pronunciation-block">
+          <div className="pronunciation-heading">
+            <p><span>02</span> 读音陷阱</p>
+            <h3>望落熟口熟面，<br />开口先知读错。</h3>
+          </div>
+          <div className="trap-list">
+            {pronunciationTraps.map((item) => <article key={item.char}>
+              <button className="trap-char" onClick={() => speak(item.example.split(" ")[0])} aria-label={`播放${item.char}字例词`}>
+                {item.char}<small>{item.traditional === item.char ? "" : `繁：${item.traditional}`}</small>
+              </button>
+              <div className="trap-copy">
+                <p className="trap-jyutping">{item.jyutping}</p>
+                <h4>{item.example}</h4>
+                <p>{item.reminder}</p>
+              </div>
+              <button className="trap-play" onClick={() => speak(item.example.split(" ")[0])} aria-label={`听${item.example}`}>▶</button>
+            </article>)}
+          </div>
         </div>
       </section>
 
